@@ -28,6 +28,7 @@ table.table.table-bordered.table-hovered
 			td(html-body).sms-body
 
 hr
+script(src="/socket.io/socket.io.js")
 script.
 	Date.prototype.toString = function(format){
 		return $.formatDate(this, format);
@@ -145,4 +146,8 @@ script.
 		$(":checkbox").change(function(){
 			$("tbody").toggleClass('hide-no-cost',this.checked);
 		});
-	})
+
+		io('ws://' + location.host).on("new-date",function(data){
+			onLoadData(data);
+		});
+	});
