@@ -3,9 +3,16 @@ package io.lcs.mysms;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 
 import com.google.gson.Gson;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -56,7 +63,7 @@ public class ReadSMS {
 		return new Gson().toJson(list);
 	}
 
-	public void export()  {
+	public String export()  {
 		File SDPATH = Environment.getExternalStorageDirectory();
 		File sms = new File(SDPATH, "mySMS.json");
 		try {
@@ -66,6 +73,44 @@ public class ReadSMS {
 			fw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "export fail !";
 		}
+		return "export to :" + sms.getAbsolutePath();
 	}
+
+	public String upload(String url , final Handler handler) {
+		if (url == null || "".equals(url.trim())) {
+			return "no url";
+		}
+		MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+		Map<String, String> map = new HashMap<>();
+		map.put("data", this.read());
+		final OkHttpClient client = new OkHttpClient();
+
+		RequestBody body = RequestBody.create(JSON, new Gson().toJson(map));
+		final Request request = new Request.Builder()
+				.url(url)
+				.post(body)
+				.build();
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				String result ;
+				try {
+					result = client.newCall(request).execute().body().string();
+				} catch (Exception e) {
+					e.printStackTrace();
+					result = e.getMessage();
+				}
+				Message msg = new Message();
+				Bundle b = new Bundle();
+				b.putString("result", result);
+				msg.setData(b);
+				handler.sendMessage(msg);
+			}
+		}).start();
+		return "upload ..... ";
+	}
+
 }
