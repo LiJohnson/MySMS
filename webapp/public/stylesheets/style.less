@@ -1,0 +1,48 @@
+body {
+  padding: 5px 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+.read-file{
+	margin: 0px 0px 10px 0px;
+	padding: 0px;
+
+	input{
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		cursor: pointer;
+	}
+
+	&:before{
+		position: absolute;
+		padding-top: 5px;
+		content: attr(data-value);
+	};
+}
+
+table{
+	th,td{white-space: nowrap;}
+	.sms-body{
+		overflow: hidden;
+		max-width: 50%;
+	}
+	tbody{
+		&.hide-no-cost{
+			tr{
+				display: none;
+				&.cost{
+					display: table-row;
+				}
+			}
+		}
+		.card{
+			background: red;
+			&.cost{
+				background:rgb(150, 150, 187);
+				&.balance{
+					background: #ccc;
+				}
+			}
+		}
+	}
+}

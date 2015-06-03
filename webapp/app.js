@@ -30,6 +30,10 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', routes.index);
+app.get("/hi",function(req,res){
+  res.write("hi lcs");
+  res.end();
+})
 
 app.listen(9595, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
