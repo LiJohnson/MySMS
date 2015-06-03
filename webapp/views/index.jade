@@ -3,9 +3,16 @@ a.btn.btn-primary.form-control.read-file(data-value="select file")
 	input(type="file")
 
 select.btn.btn-default.address
-label
-	input(type="checkbox",value="hide")
-	|hide
+form.form-inline
+	label
+		input(type="radio" name="filter" value="filter-all")
+		|all
+	label
+		input(type="radio" name="filter" value="filter-cost")
+		|cost
+	label
+		input(type="radio" name="filter" value="filter-no-cost")
+		|no-cost
 
 table.table.table-bordered.table-hovered
 	thead
@@ -143,11 +150,11 @@ script.
 			updateTable( $option.data("thread") );
 		});
 		
-		$(":checkbox").change(function(){
-			$("tbody").toggleClass('hide-no-cost',this.checked);
+		$(":radio").change(function(){
+			$("tbody").prop('class',this.value).find("tr:visible").each(function(i){ $(this).setHtml({index:i+1})  })
 		});
 
-		io('ws://' + location.host).on("new-date",function(data){
-			onLoadData(data);
+		io('ws://' + location.host).on("data",function(data){
+			onLoadData(JSON.parse(data));
 		});
 	});

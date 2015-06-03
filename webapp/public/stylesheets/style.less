@@ -20,6 +20,13 @@ body {
 	};
 }
 
+form{
+	display:inline;
+	label{
+		margin-left:5px;
+	}
+}
+
 table{
 	th,td{white-space: nowrap;}
 	.sms-body{
@@ -27,11 +34,18 @@ table{
 		max-width: 50%;
 	}
 	tbody{
-		&.hide-no-cost{
+		&.filter-cost{
 			tr{
 				display: none;
 				&.cost{
 					display: table-row;
+				}
+			}
+		}
+		&.filter-no-cost{
+			tr{
+				&.cost{
+					display: none;
 				}
 			}
 		}
