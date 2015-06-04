@@ -34,7 +34,6 @@ app.get("/hi",function(req,res){
 	res.write("hi lcs");
 	res.end();
 });
-;
 
 io.on("connection",(function(){
 	var socketMap = {};
