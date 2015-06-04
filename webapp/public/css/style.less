@@ -2,20 +2,26 @@ body {
   padding: 5px 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+.head-row{
+	margin-left: 0;
+	margin-bottom: 5px;
+	> *{
+		margin-right: 15px;
+	}
+}
 .read-file{
-	margin: 0px 0px 10px 0px;
-	padding: 0px;
-
+	position: relative;
 	input{
+		position:absolute;
+		cursor: pointer;
+		left:0;
+		top:0;
 		width: 100%;
 		height: 100%;
 		opacity: 0;
-		cursor: pointer;
 	}
 
 	&:before{
-		position: absolute;
-		padding-top: 5px;
 		content: attr(data-value);
 	};
 }
