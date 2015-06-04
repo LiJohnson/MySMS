@@ -37,12 +37,23 @@ app.get("/hi",function(req,res){
 
 io.on("connection",(function(){
 	var socketMap = {};
+
 	app.post("/upload",function(req,res){
 		for( var id in socketMap ){
 			socketMap[id].emit("data",req.body.data)
 		}
 		res.write("uploaded");
 		res.end();
+	});
+
+	app.get("/upload/url",function(req,res){
+		require("./module/ip").getIPs(function(ips){
+			ips = ips || [];
+			ips.forEach(function(ip,i){
+				ips[i] = "http://" + ip + ":" + app.address().port + "/upload"
+			});
+			res.send(ips);
+		});
 	});
 	return function(socket){
 		socketMap[socket.id] = socket;

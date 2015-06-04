@@ -5,7 +5,7 @@ div.row.head-row
 
 	select.btn.btn-default.address
 
-	a.hide.download(href="").btn.btn-default.btn-xs.glyphicon.glyphicon-download(href="javascript:;" download="mySMS.json")
+	a.hide.download.btn.btn-default.btn-xs.glyphicon.glyphicon-download(href="javascript:;" download="mySMS.json")
 
 	form.form-inline
 		div.radio
@@ -18,6 +18,10 @@ div.row.head-row
 			label
 				input(type="radio" name="filter" value="filter-no-cost")
 			|no-cost
+
+	a.btn.btn-default.btn-xs.ip
+		|IP-
+		i.glyphicon.glyphicon-qrcode
 
 table.table.table-bordered.table-hovered
 	thead

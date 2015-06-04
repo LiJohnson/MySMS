@@ -119,6 +119,32 @@ $(function(){
 		$("tbody").prop('class',this.value).find("tr:visible").each(function(i){ $(this).setHtml({index:i+1})  })
 	});
 
+	$(".btn.ip").click(function(){
+		var $box = $.box3("loading...").find(".modal-body").addClass("url-list");
+		$.get("/upload/url",function(urls){
+			var $ol = $("<ol></ol>");
+			$.each(urls,function(i,url){
+				$ol.append($("<li>").html(url));
+			});
+			$box.html($ol);
+		},"json");
+
+		$box.on("click","li",function(){
+			$box.find("li").removeClass("activity");
+			$(this).addClass("activity");
+
+			var $img = $box.find("img");
+			if(!$img.length){
+				$img = $("<img />");
+				$box.append($img);
+				$img.load(function(){
+					$img.css("opacity",1);
+				});
+			};
+			$img.css("opacity",0.5);
+			$img.prop("src","http://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=0&data=" + $(this).html());
+		});
+	});
 	io('ws://' + location.host).on("data",function(data){
 		onLoadData(JSON.parse(data));
 	});
