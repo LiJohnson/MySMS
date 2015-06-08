@@ -120,7 +120,10 @@ $(function(){
 	});
 
 	$(".btn.ip").click(function(){
-		var $box = $.box3("loading...").find(".modal-body").addClass("url-list");
+		var $box = $.box3({
+			message:"loading...",
+			title:"服务IP"
+		}).find(".modal-body").addClass("url-list");
 		$.get("/upload/url",function(urls){
 			var $ol = $("<ol></ol>");
 			$.each(urls,function(i,url){
@@ -147,5 +150,6 @@ $(function(){
 	});
 	io('ws://' + location.host).on("data",function(data){
 		onLoadData(JSON.parse(data));
+		$(".modal").data("box").hide();
 	});
 });
