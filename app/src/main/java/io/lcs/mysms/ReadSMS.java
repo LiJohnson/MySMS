@@ -73,20 +73,19 @@ public class ReadSMS {
 			fw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "export fail !";
+			return "[export fail !]";
 		}
-		return "export to :" + sms.getAbsolutePath();
+		return sms.getAbsolutePath();
 	}
 
-	public String upload(String url , final Handler handler) {
+	public String upload(String url , final Handler handler) throws Exception {
 		if (url == null || "".equals(url.trim())) {
-			return "no url";
+			throw new Exception("no url");
 		}
 		MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 		Map<String, String> map = new HashMap<>();
 		map.put("data", this.read());
 		final OkHttpClient client = new OkHttpClient();
-
 		RequestBody body = RequestBody.create(JSON, new Gson().toJson(map));
 		final Request request = new Request.Builder()
 				.url(url)

@@ -3,4 +3,9 @@
 
 	<string name="hello_world">Hello world!</string>
 	<string name="action_settings">Settings</string>
+
+	<string name="hint_url">upload url</string>
+	<string name="btn_upload">upload</string>
+	<string name="btn_export">export</string>
+	<string name="btn_startup">startup server</string>
 </resources>
